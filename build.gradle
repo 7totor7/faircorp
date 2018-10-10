@@ -27,8 +27,8 @@ repositories {
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	implementation('org.springframework.boot:spring-boot-starter-web')
-	compile('com.h2database:h2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	implementation('com.h2database:h2')
+	implementation('javax.xml.bind:jaxb-api:2.3.0')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }

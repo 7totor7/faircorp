@@ -17,7 +17,7 @@ public class LightController {
     @Autowired
     private RoomDao roomDao;
 
-
+    @CrossOrigin
     @GetMapping // (5)
     public List<LightDto> findAll() {
         return lightDao.findAll()
@@ -25,12 +25,13 @@ public class LightController {
                 .map(LightDto::new)
                 .collect(Collectors.toList());
     }
-
+    @CrossOrigin
     @GetMapping(path = "/{id}")
     public LightDto findById(@PathVariable Long id) {
         return lightDao.findById(id).map(light -> new LightDto(light)).orElse(null);
     }
 
+    @CrossOrigin
     @PutMapping(path = "/{id}/switch")
     public LightDto switchStatus(@PathVariable Long id) {
         Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -38,6 +39,7 @@ public class LightController {
         return new LightDto(light);
     }
 
+    @CrossOrigin
     @PostMapping
     public LightDto create(@RequestBody LightDto dto) {
         Light light = null;

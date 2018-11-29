@@ -4,7 +4,6 @@ import javax.persistence.*;
 @Entity// (1)
 @Table(name = "SP_LIGHT")
 public class Light {
-
     @Id // (2)
     @GeneratedValue
     private Long id;
@@ -19,14 +18,14 @@ public class Light {
     @ManyToOne(optional = false)
     private Room room;
 
+    public Light(){
+
+    }
+
     public Light(Room room, Integer level, Status status) {
         this.room = room;
         this.level = level;
         this.status = status;
-    }
-
-    public Light(){
-
     }
 
     public Light(Integer level, Status status) {

@@ -1,7 +1,6 @@
 package com.esme.spring.faircorp.model;
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity // (1)
 @Table(name = "SP_ROOM") // (2)
@@ -19,6 +18,8 @@ public class Room {
     @OneToMany(mappedBy = "room")
     public List<Light> lights;
 
+    @ManyToOne(optional = false)
+    private Building building;
 
     //Empty Constructor
     public Room() {
@@ -27,6 +28,12 @@ public class Room {
     public Room(Integer floor, List<Light> lights) {
         this.floor = floor;
         this.lights = lights;
+    }
+
+    public Room(String name, Integer floor, Building building){
+        this.name = name;
+        this.floor = floor;
+        this.building = building;
     }
 
     public Long getId() {
@@ -43,6 +50,22 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
 

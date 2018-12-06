@@ -1,5 +1,8 @@
 package com.esme.spring.faircorp.model;
 
+import com.esme.spring.faircorp.mqtt.MqttSendMessage;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,17 +28,32 @@ public class LightController {
                 .map(LightDto::new)
                 .collect(Collectors.toList());
     }
+
+    @CrossOrigin
+    @GetMapping(path="/mqtt")// (5)
+    public void sendMessage() throws MqttException {
+        MqttSendMessage publisher = new MqttSendMessage();
+    }
+
     @CrossOrigin
     @GetMapping(path = "/{id}")
     public LightDto findById(@PathVariable Long id) {
         return lightDao.findById(id).map(light -> new LightDto(light)).orElse(null);
     }
 
-    @CrossOrigin
+    /*@CrossOrigin
     @PutMapping(path = "/{id}/switch")
     public LightDto switchStatus(@PathVariable Long id) {
         Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
         light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
+        return new LightDto(light);
+    }*/
+
+    @CrossOrigin
+    @PutMapping(path = "http://192.168.1.131/api/T2mvaglBjVBhS4sVulI2e-VKB0fgMxOCVCMS9Keo/lights/4/state/")
+    public LightDto switchStatus(@PathVariable Long id) {
+        Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
+        light.setStatus(light.getStatus() == Status.ON ? Status.OFF : Status.ON);
         return new LightDto(light);
     }
 
@@ -57,6 +75,7 @@ public class LightController {
 
         return new LightDto(light);
     }
+
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {

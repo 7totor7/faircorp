@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 public class SubscriberBis implements MqttCallback {
 
     private final int qos = 1;
-    private String topic = "test";
+    private String topic = "toto";
     private MqttClient client;
 
     public SubscriberBis(String uri) throws MqttException, URISyntaxException {
@@ -77,7 +77,7 @@ public class SubscriberBis implements MqttCallback {
 
     // MAIN inside the class so we can try it without launching the app!!!! :D
     public static void main(String[] args) throws MqttException, URISyntaxException {
-        SubscriberBis s = new SubscriberBis("tcp://xqkjocpe:5Vv13gCyUmI8@m23.cloudmqtt.com:11344");
+        SubscriberBis s = new SubscriberBis("tcp://7totor7:7totor7@m15.cloudmqtt.com:14768");
         s.sendMessage("Hello");
         s.sendMessage("Hello 2");
     }

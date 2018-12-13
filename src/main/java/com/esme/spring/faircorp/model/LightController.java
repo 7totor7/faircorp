@@ -1,12 +1,12 @@
 package com.esme.spring.faircorp.model;
 
-import com.esme.spring.faircorp.mqtt.MqttSendMessage;
+import com.esme.spring.faircorp.mqtt.SubscriberBis;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,11 +29,11 @@ public class LightController {
                 .collect(Collectors.toList());
     }
 
-    @CrossOrigin
+/*    @CrossOrigin
     @GetMapping(path="/mqtt")// (5)
-    public void sendMessage() throws MqttException {
-        MqttSendMessage publisher = new MqttSendMessage();
-    }
+    public void sendMessage() throws MqttException, URISyntaxException {
+        SubscriberBis publisher = new SubscriberBis("hola");
+    }*/
 
     @CrossOrigin
     @GetMapping(path = "/{id}")

@@ -21,8 +21,10 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+	}
 }
-
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -31,4 +33,7 @@ dependencies {
 	implementation('javax.xml.bind:jaxb-api:2.3.0')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
+	compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.0.2'
+
 }

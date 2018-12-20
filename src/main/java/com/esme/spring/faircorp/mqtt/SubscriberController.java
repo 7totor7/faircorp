@@ -24,7 +24,6 @@ public class SubscriberController {
         //received_complete and last_message are public var from the subscriber class.
         while(!s.received_complete)
         {
-            System.out.println(s.received_complete);
             Thread.sleep(1000);
         }
         s.received_complete = false;

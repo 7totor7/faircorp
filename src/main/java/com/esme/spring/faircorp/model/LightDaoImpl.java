@@ -8,7 +8,7 @@ public class LightDaoImpl implements LightDaoCustom{
 
     @Override
     public List<Light> findOnLights() {
-        String jpql = "select lt from SP_LIGHT lt where lt.status = :value";
+        String jpql = "select lt from LIGHT lt where lt.status = :value";
         return em.createQuery(jpql, Light.class)
                 .setParameter("value", Status.ON)
                 .getResultList();

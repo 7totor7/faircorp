@@ -2,7 +2,7 @@ package com.esme.spring.faircorp.model;
 import javax.persistence.*;
 
 @Entity// (1)
-@Table(name = "SP_LIGHT")
+@Table(name = "LIGHT")
 public class Light {
     @Id // (2)
     @GeneratedValue

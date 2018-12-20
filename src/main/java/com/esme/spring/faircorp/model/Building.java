@@ -3,7 +3,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity // (1)
-@Table(name = "SP_BUILDING") // (2)
+@Table(name = "BUILDING") // (2)
 public class Building {
     @Id // (3)
     @GeneratedValue

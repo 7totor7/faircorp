@@ -1,6 +1,6 @@
 package com.esme.spring.faircorp.model;
 
-public class LightDto {
+public class  LightDto {
 
     private Long id;
     private Integer level;

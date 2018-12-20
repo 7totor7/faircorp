@@ -14,6 +14,8 @@ public class Subscriber implements MqttCallback {
 
     private final int qos = 1;
     private String topic = "toto";
+    public String last_message="nothing";
+    public volatile boolean received_complete;
     private MqttClient client;
 
     public Subscriber(String uri) throws MqttException, URISyntaxException {
@@ -38,7 +40,6 @@ public class Subscriber implements MqttCallback {
         this.client = new MqttClient(host, clientId, new MemoryPersistence());
         this.client.setCallback(this);
         this.client.connect(conOpt);
-
         this.client.subscribe(this.topic, qos);
     }
 
@@ -71,8 +72,12 @@ public class Subscriber implements MqttCallback {
     /**
      * @see MqttCallback#messageArrived(String, MqttMessage)
      */
+    @Override
     public void messageArrived(String topic, MqttMessage message) throws MqttException {
-        System.out.println(String.format("[%s] %s", topic, new String(message.getPayload())));
+        String last_message = new String(message.getPayload());
+        this.last_message = last_message;
+        System.out.println(String.format("[%s] %s", topic, last_message));
+        this.received_complete = true;
     }
 
     // MAIN inside the class so we can try it without launching the app!!!! :D

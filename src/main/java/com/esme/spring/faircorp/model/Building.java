@@ -20,12 +20,20 @@ public class Building {
     public Building() {
     }
 
-    public Building(List<Room> rooms) {
+    public Building(String name, List<Room> rooms) {
+        this.name = name;
         this.rooms = rooms;
     }
 
-    public Building(String name){
+    public Building(Long id, String name, List<Room> room){
+        this.id = id;
         this.name = name;
+        this.rooms = rooms;
+    }
+
+    public Building(Long id, String name){
+        this.id = id;
+        this.name= name;
     }
 
     public Long getId() {

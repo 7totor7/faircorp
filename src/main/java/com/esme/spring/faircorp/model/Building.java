@@ -25,13 +25,14 @@ public class Building {
         this.rooms = rooms;
     }
 
-    public Building(Long id, String name, List<Room> room){
+    public Building(Long id, String name, List<Room> rooms){
         this.id = id;
         this.name = name;
         this.rooms = rooms;
     }
 
     public Building(Long id, String name){
+
         this.id = id;
         this.name= name;
     }
@@ -51,5 +52,7 @@ public class Building {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<Room> getRooms() { return this.rooms; }
 
 }

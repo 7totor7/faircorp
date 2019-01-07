@@ -18,14 +18,16 @@ public class Subscriber implements MqttCallback {
     private String topic = "LIGHTS";
     public String last_message="nothing";
     public volatile boolean received_complete;
-    private MqttClient client;
+    public static MqttClient client;
 
     public Subscriber(String uri) throws MqttException, URISyntaxException {
         this(new URI(uri));
     }
 
     public Subscriber(URI uri) throws MqttException {
+        System.out.println("CREATING SUBSCRIBER__--__--__--__");
         String host = String.format("tcp://%s:%d", uri.getHost(), uri.getPort());
+        //String host = "tcp://7totor7:7totor7@m23.cloudmqtt.com:11344";
         String[] auth = this.getAuth(uri);
         String username = auth[0];
         String password = auth[1];
@@ -44,6 +46,8 @@ public class Subscriber implements MqttCallback {
         this.client.connect(conOpt);
         this.client.subscribe("LIGHTS", qos);
         this.client.subscribe("SWITCH", qos);
+        this.client.subscribe("PARTY", qos);
+        System.out.println("SUBSCRIBER CREATED__--__--__--__");
     }
 
     private String[] getAuth(URI uri) {
@@ -83,8 +87,34 @@ public class Subscriber implements MqttCallback {
         this.received_complete = true;
     }
 
-    // MAIN inside the class so we can try it without launching the app!!!! :D
+    public static String temporarySubscriber(String topic, String message) throws MqttException, URISyntaxException, InterruptedException {
 
+        String last_message = null;
+        Subscriber s = new Subscriber("tcp://7totor7:7totor7@m23.cloudmqtt.com:11344");
+        s.sendMessage(topic, message);
+        while (!s.received_complete) {
+            Thread.sleep(1000);
+        }
+        s.received_complete = false;
+        System.out.println("Message Published");
+        Thread.sleep(100);
+        if (!s.received_complete){
+            Thread.sleep(1000);
+        }
+        if (!s.received_complete){
+            System.out.println("No Response from Arduino");
+        }
+        else {
+            System.out.println("Message Received");
+            s.received_complete = false;
+            last_message = s.last_message;
+            System.out.println(last_message);
+        }
+        System.out.println("client closed__--__");
+        return last_message;
+    }
+
+    // MAIN inside the class so we can try it without launching the app!!!! :D
 
     public static void main(String[] args) throws MqttException, URISyntaxException, InterruptedException {
 

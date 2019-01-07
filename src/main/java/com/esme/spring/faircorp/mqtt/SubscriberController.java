@@ -1,4 +1,3 @@
-/*
 package com.esme.spring.faircorp.mqtt;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -38,4 +37,3 @@ public class SubscriberController {
         return last_message;
     }
 }
-*/

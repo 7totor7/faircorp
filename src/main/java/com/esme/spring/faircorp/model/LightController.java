@@ -1,5 +1,6 @@
 package com.esme.spring.faircorp.model;
 
+import com.esme.spring.faircorp.mqtt.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -18,14 +18,14 @@ public class SubscriberController {
     }
 
     //Subscriber out of Getmapping to avoid creating again the same subscriber.
-    private Subscriber s = new Subscriber("tcp://7totor7:7totor7@m15.cloudmqtt.com:14768");
+    public Subscriber s = new Subscriber("tcp://7totor7:7totor7@m23.cloudmqtt.com:11344");
 
     //Inital Get when loading the page
     @CrossOrigin
     @GetMapping // (5)
     public String subscribe() throws MqttException, InterruptedException {
-        String message = "[{\"id\":0,\"level\":8,\"status\":\"ON\",\"roomId\":0},{\"id\":1,\"level\":0,\"status\":\"OFF\",\"roomId\":1}]";
-        s.sendMessage(message);
+        String message = "STATUS";
+        s.sendMessage("LIGHTS", message);
         //Wait until the message is received to return last_message.
         //received_complete and last_message are public var from the subscriber class.
         while(!s.received_complete)
@@ -36,4 +36,5 @@ public class SubscriberController {
         String last_message = s.last_message;
         return last_message;
     }
+
 }

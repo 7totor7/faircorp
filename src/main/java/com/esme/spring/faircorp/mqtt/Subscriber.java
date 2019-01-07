@@ -1,9 +1,11 @@
 package com.esme.spring.faircorp.mqtt;
 
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import javax.xml.bind.DatatypeConverter;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -13,7 +15,7 @@ import java.net.URISyntaxException;
 public class Subscriber implements MqttCallback {
 
     private final int qos = 1;
-    private String topic = "toto";
+    private String topic = "LIGHTS";
     public String last_message="nothing";
     public volatile boolean received_complete;
     private MqttClient client;
@@ -40,7 +42,8 @@ public class Subscriber implements MqttCallback {
         this.client = new MqttClient(host, clientId, new MemoryPersistence());
         this.client.setCallback(this);
         this.client.connect(conOpt);
-        this.client.subscribe(this.topic, qos);
+        this.client.subscribe("LIGHTS", qos);
+        this.client.subscribe("SWITCH", qos);
     }
 
     private String[] getAuth(URI uri) {
@@ -49,10 +52,10 @@ public class Subscriber implements MqttCallback {
         return first[0].split(":");
     }
 
-    public void sendMessage(String payload) throws MqttException {
+    public void sendMessage(String topic, String payload) throws MqttException {
         MqttMessage message = new MqttMessage(payload.getBytes());
         message.setQos(qos);
-        this.client.publish(this.topic, message); // Blocking publish
+        this.client.publish(topic, message); // Blocking publish
     }
 
     /**
@@ -81,9 +84,34 @@ public class Subscriber implements MqttCallback {
     }
 
     // MAIN inside the class so we can try it without launching the app!!!! :D
-    public static void main(String[] args) throws MqttException, URISyntaxException {
-        Subscriber s = new Subscriber("tcp://7totor7:7totor7@m15.cloudmqtt.com:14768");
-        s.sendMessage("Hello");
-        s.sendMessage("Hello 2");
+
+
+    public static void main(String[] args) throws MqttException, URISyntaxException, InterruptedException {
+
+        Subscriber s = new Subscriber("tcp://7totor7:7totor7@m23.cloudmqtt.com:11344");
+        s.sendMessage("LIGHTS","STATE");
+        while(!s.received_complete)
+        {
+            Thread.sleep(1000);
+        }
+        s.received_complete = false;
+        System.out.println("Message Published");
+        while(!s.received_complete)
+        {
+            Thread.sleep(1000);
+        }
+        System.out.println("Message Received");
+        s.received_complete = false;
+        String last_message = s.last_message;
+        System.out.println(last_message);
+        //byte[] hola = Base64.decodeBase64(last_message);
+        last_message = Base64.decodeBase64(last_message).toString();
+        System.out.println("hola");
+        System.out.println(last_message);
+        System.out.println("Me cago en la puta");
+
+
+
+
     }
 }

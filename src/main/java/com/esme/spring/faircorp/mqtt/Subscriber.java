@@ -1,3 +1,4 @@
+/*
 package com.esme.spring.faircorp.mqtt;
 
 
@@ -9,9 +10,11 @@ import javax.xml.bind.DatatypeConverter;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+*/
 /**
  * A sample application that demonstrates how to use the Paho MQTT v3.1 Client blocking API.
- */
+ *//*
+
 public class Subscriber implements MqttCallback {
 
     private final int qos = 1;
@@ -62,23 +65,29 @@ public class Subscriber implements MqttCallback {
         this.client.publish(topic, message); // Blocking publish
     }
 
-    /**
+    */
+/**
      * @see MqttCallback#connectionLost(Throwable)
-     */
+     *//*
+
     public void connectionLost(Throwable cause) {
         System.out.println("Connection lost because: " + cause);
         System.exit(1);
     }
 
-    /**
+    */
+/**
      * @see MqttCallback#deliveryComplete(IMqttDeliveryToken)
-     */
+     *//*
+
     public void deliveryComplete(IMqttDeliveryToken token) {
     }
 
-    /**
+    */
+/**
      * @see MqttCallback#messageArrived(String, MqttMessage)
-     */
+     *//*
+
     @Override
     public void messageArrived(String topic, MqttMessage message) throws MqttException {
         String last_message = new String(message.getPayload());
@@ -99,7 +108,7 @@ public class Subscriber implements MqttCallback {
         System.out.println("Message Published");
         Thread.sleep(500);
         if (!s.received_complete){
-            Thread.sleep(1500);
+            Thread.sleep(5000);
         }
         if (!s.received_complete){
             System.out.println("No Response from Arduino");
@@ -144,4 +153,4 @@ public class Subscriber implements MqttCallback {
 
 
     }
-}
+}*/

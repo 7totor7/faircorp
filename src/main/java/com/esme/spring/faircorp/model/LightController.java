@@ -1,6 +1,6 @@
 package com.esme.spring.faircorp.model;
 
-import com.esme.spring.faircorp.mqtt.Subscriber;
+//import com.esme.spring.faircorp.mqtt.Subscriber;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.esme.spring.faircorp.mqtt.Subscriber.temporarySubscriber;
+//import static com.esme.spring.faircorp.mqtt.Subscriber.temporarySubscriber;
 
 @RestController  // (1)
 @RequestMapping("/api/lights") // (2)
@@ -36,7 +36,7 @@ public class LightController {
         return lightDao.findById(id).map(light -> new LightDto(light)).orElse(null);
     }
 
-    @CrossOrigin
+    /*@CrossOrigin
     @PutMapping(path = "/{id}/switch")
     public LightDto switchStatus(@PathVariable Long id) throws InterruptedException, MqttException, URISyntaxException {
         Subscriber.client.disconnect();
@@ -51,23 +51,31 @@ public class LightController {
         else{
             return null;
         }
+    }*/
+
+    @CrossOrigin
+    @PutMapping(path = "/{id}/switch")
+    public LightDto switchForce(@PathVariable Long id) throws InterruptedException, MqttException, URISyntaxException {
+        Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
+            light.setStatus(light.getStatus() == Status.ON ? Status.OFF : Status.ON);
+            return new LightDto(light);
     }
 
     @CrossOrigin
     @PutMapping(path = "/{id}/party")
     public LightDto party(@PathVariable Long id) throws InterruptedException, MqttException, URISyntaxException {
-        Subscriber.client.disconnect();
-        Subscriber.client.close();
+        //Subscriber.client.disconnect();
+        //Subscriber.client.close();
         Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
-        String message = String.format("LOOP/%s", light.getId());
-        String result = temporarySubscriber("COLOR", message);
-        if (result != null) {
+        //String message = String.format("LOOP/%s", light.getId());
+        //String result = temporarySubscriber("COLOR", message);
+        //if (result != null) {
             light.setStatus(Status.ON);
             return new LightDto(light);
-        }
-        else{
-            return null;
-        }
+        //}
+        //else{
+          //  return null;
+        //}
     }
 
     /*@CrossOrigin

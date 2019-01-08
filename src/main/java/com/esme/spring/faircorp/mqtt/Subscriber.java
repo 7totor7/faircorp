@@ -97,9 +97,9 @@ public class Subscriber implements MqttCallback {
         }
         s.received_complete = false;
         System.out.println("Message Published");
-        Thread.sleep(100);
+        Thread.sleep(500);
         if (!s.received_complete){
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         }
         if (!s.received_complete){
             System.out.println("No Response from Arduino");
